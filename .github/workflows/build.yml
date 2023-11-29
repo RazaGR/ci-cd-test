@@ -46,7 +46,7 @@ jobs:
           current_chart_version=$(grep -oP '(?<=version: ).*' chart/Chart.yaml)
           current_app_version=$(grep -oP '(?<=appVersion: ")[^"]*' chart/Chart.yaml)
 
-          # Use the version from GitVersion/
+          # Use the version from GitVersion
           new_chart_version=${{ steps.gitversion.outputs.semVer }}
           new_app_version=${{ steps.gitversion.outputs.fullSemVer }}
 
