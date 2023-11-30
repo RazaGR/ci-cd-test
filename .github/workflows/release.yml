@@ -23,55 +23,8 @@ jobs:
       - name: Go test build
         uses: ./.github/actions/test-build-go-action
 
-      - name: Set up GitVersion
-        uses: gittools/actions/gitversion/setup@v0
-        with:
-          versionSpec: '5.x'
-
-      - name: Execute GitVersion
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0
-
       - name: Update version
-        run: |
-          set +x
-          # Get the current version from the Chart.yaml file
-          current_chart_version=$(grep -oP '(?<=version: ).*' chart/Chart.yaml)
-          current_app_version=$(grep -oP '(?<=appVersion: ")[^"]*' chart/Chart.yaml)
-
-          # Split the version into major, minor, and patch components
-          IFS='.' read -ra version_parts <<< "$current_chart_version"
-          major=${version_parts[0]}
-          minor=${version_parts[1]}
-          patch=${version_parts[2]}
-
-          # Increment the version according to the rules
-          # we dont go beyond 99 at pensionera for chart versions.
-          if [[ $patch -eq 99 ]]; then
-            patch=0
-            if [[ $minor -eq 99 ]]; then
-              minor=0
-              ((major++))
-            else
-              ((minor++))
-            fi
-          else
-            ((patch++))
-          fi
-
-          # Create the upcoming version for chart
-          new_chart_version="$major.$minor.$patch"
-          # Use the version from GitVersion for the app
-          new_app_version=${{ steps.gitversion.outputs.fullSemVer }}
-          # Create new release version 
-          new_release_version=${{ steps.gitversion.outputs.semVer }}
-
-          echo "UPCOMING_CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
-          echo "UPCOMING_APP_VERSION=$new_app_version" >> $GITHUB_ENV
-          echo "NEW_RELEASE_VERSION=$new_release_version" >> $GITHUB_ENV
-
-          sed -i "s/version: $current_chart_version/version: $new_chart_version/" chart/Chart.yaml
-          sed -i "s/appVersion: \"$current_app_version\"/appVersion: \"$new_app_version\"/" chart/Chart.yaml
+        uses: ./.github/actions/version-update-action
 
       - name: Commit and push changes
         uses: ./.github/actions/commit-push-action
