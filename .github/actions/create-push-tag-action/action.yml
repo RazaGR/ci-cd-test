@@ -5,6 +5,7 @@ runs:
   using: 'composite'
   steps:
     - name: Create and push tag
+      shell: bash
       run: |
         git tag ${{ env.UPCOMING_CHART_VERSION }}
         git push origin ${{ env.UPCOMING_CHART_VERSION }}
