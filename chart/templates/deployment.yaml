@@ -41,7 +41,7 @@ spec:
             path: /alive
             initialDelaySeconds: 10
             periodSeconds: 3
-          readinessProbe:;working_dir: dir
+          readinessProbe:
             path: /ready
             initialDelaySeconds: 10
             periodSeconds: 5
