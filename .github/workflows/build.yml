@@ -15,20 +15,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: ./.github/actions/checkout-action.yml
+        uses: ./.github/actions/checkout-action
 
       - name: Go test build
-        uses: ./.github/actions/test-build-go-action.yml
+        uses: ./.github/actions/test-build-go-action
 
       - name: Update version
-        uses: ./.github/actions/version-action.yaml
+        uses: ./.github/actions/version-action
 
       - name: Commit and push changes
-        uses: ./.github/actions/commit-push-action.yaml
+        uses: ./.github/actions/commit-push-action
 
       - name: 'Login to GitHub Container Registry'
-        uses: ./.github/actions/build-push-docker-action.yaml
+        uses: ./.github/actions/build-push-docker-action
 
       - name: Create and push tag
-        uses: ./.github/actions/create-push-tag-action.yaml
+        uses: ./.github/actions/create-push-tag-action
 
