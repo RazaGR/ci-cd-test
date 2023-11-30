@@ -49,7 +49,7 @@ runs:
 
         echo "UPCOMING_CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
         echo "UPCOMING_APP_VERSION=$new_app_version" >> $GITHUB_ENV
-        echo "NEW_RELEASE_VERSION"=$new_release_version" >> $GITHUB_ENV
+        echo "NEW_RELEASE_VERSION=$new_release_version" >> $GITHUB_ENV
 
         sed -i "s/version: $current_chart_version/version: $new_chart_version/" chart/Chart.yaml
         sed -i "s/appVersion: \"$current_app_version\"/appVersion: \"$new_app_version\"/" chart/Chart.yaml
