@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/test-build-go-action
 
       - name: Update version
-        uses: ./.github/actions/version-action
+        uses: ./.github/actions/version-update-action
 
       - name: Commit and push changes
         uses: ./.github/actions/commit-push-action
