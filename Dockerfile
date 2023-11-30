@@ -1,5 +1,5 @@
 
-FROM alpine:3.7
+FROM golang:1.17-alpine
 RUN \
     apk --update add curl bash nano musl-dev && \
     rm -r /var/cache/apk/*
