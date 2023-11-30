@@ -37,14 +37,18 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe: 
-            path: /alive
+          livenessProbe:
             initialDelaySeconds: 10
             periodSeconds: 3
+            httpGet:
+              path: /
+              port: http
           readinessProbe:
-            path: /ready
             initialDelaySeconds: 10
-            periodSeconds: 5
+            periodSeconds: 3
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
