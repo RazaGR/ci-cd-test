@@ -1,5 +1,5 @@
 
-FROM alpine:3.18.4
+FROM amd64/alpine:3.14
 RUN \
     apk --update add curl bash nano && \
     rm -r /var/cache/apk/*
