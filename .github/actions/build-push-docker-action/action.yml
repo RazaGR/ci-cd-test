@@ -34,5 +34,5 @@ runs:
         context: .
         push: true
         tags: |
-          ghcr.io/${{ steps.string.outputs.lowercase }}:${{ env.UPCOMING_CHART_VERSION }}
+          ghcr.io/${{ steps.string.outputs.lowercase }}:${{ env.NEW_RELEASE_VERSION}}
           ghcr.io/${{ steps.string.outputs.lowercase }}:latest
