@@ -11,9 +11,11 @@ runs:
         cache: false
 
     - name: Run tests
+      shell: bash
       run: go test ./...
 
     - name: Build Go project
+      shell: bash
       run: go build -o myapp
 
 
