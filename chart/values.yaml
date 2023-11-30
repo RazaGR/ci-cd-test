@@ -33,6 +33,14 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+  livenessProbe: 
+    path: /alive
+    initialDelaySeconds: 10
+    periodSeconds: 3
+  readinessProbe:
+    path: /ready
+    initialDelaySeconds: 10
+    periodSeconds: 5
 
 ingress:
   enabled: false
