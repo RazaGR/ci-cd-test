@@ -1,6 +1,11 @@
 name: 'Login to GHCR Action'
 description: 'Login to GitHub Container Registry'
 
+inputs:
+  token:
+    description: 'Github Token'
+    required: true
+
 runs:
   using: 'composite'
   steps:
@@ -10,7 +15,7 @@ runs:
       with:
         registry: ghcr.io
         username: ${{github.actor}}
-        password: ${{secrets.GITHUB_TOKEN}}
+        password: ${{inputs.token}}
 
     - id: string
       uses: ASzc/change-string-case-action@v5
