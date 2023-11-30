@@ -5,6 +5,7 @@ runs:
   using: 'composite'
   steps:
     - name: Commit and push changes
+      shell: bash
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
