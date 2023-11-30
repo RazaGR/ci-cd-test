@@ -14,6 +14,7 @@ runs:
       uses: gittools/actions/gitversion/execute@v0
 
     - name: Update version
+      shell: bash
       run: |
         # Get the current version from the Chart.yaml file
         current_chart_version=$(grep -oP '(?<=version: ).*' chart/Chart.yaml)
