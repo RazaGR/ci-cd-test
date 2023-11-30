@@ -29,6 +29,8 @@ jobs:
         uses: ./.github/actions/commit-push-action
         with:
           token: ${{secrets.GITHUB_TOKEN}}
+          username: ${{github.actor}}
+          repository: ${{github.repository}}
 
       - name: 'Login to GitHub Container Registry'
         uses: ./.github/actions/build-push-docker-action

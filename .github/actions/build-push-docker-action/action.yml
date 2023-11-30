@@ -2,8 +2,14 @@ name: 'Login to GHCR Action'
 description: 'Login to GitHub Container Registry'
 
 inputs:
+  username:
+    description: 'Github user'
+    required: true
   token:
     description: 'Github Token'
+    required: true
+  repository:
+    description: 'Github repo'
     required: true
 
 runs:
@@ -14,13 +20,13 @@ runs:
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
-        username: ${{github.actor}}
+        username: ${{inputs.username}}
         password: ${{inputs.token}}
 
     - id: string
       uses: ASzc/change-string-case-action@v5
       with:
-        string: ${{github.repository}}
+        string: ${{inputs.repository}}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
