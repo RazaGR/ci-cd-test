@@ -1,0 +1,32 @@
+name: 'GitVersion Action'
+description: 'Set up version'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up GitVersion
+      uses: gittools/actions/gitversion/setup@v0
+      with:
+        versionSpec: '5.x'
+
+    - name: Execute GitVersion
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0
+
+    - name: Update version
+      run: |
+        # Get the current version from the Chart.yaml file
+        current_chart_version=$(grep -oP '(?<=version: ).*' chart/Chart.yaml)
+        current_app_version=$(grep -oP '(?<=appVersion: ")[^"]*' chart/Chart.yaml)
+
+        # Use the version from GitVersion
+        new_chart_version=${{ steps.gitversion.outputs.semVer }}
+        new_app_version=${{ steps.gitversion.outputs.fullSemVer }}
+
+        echo "CURRENT_CHART_VERSION=$current_chart_version" >> $GITHUB_ENV
+        echo "UPCOMING_CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
+        echo "CURRENT_APP_VERSION=$current_app_version" >> $GITHUB_ENV
+        echo "UPCOMING_APP_VERSION=$new_app_version" >> $GITHUB_ENV
+
+        sed -i "s/version: $current_chart_version/version: $new_chart_version/" chart/Chart.yaml
+        sed -i "s/appVersion: \"$current_app_version\"/appVersion: \"$new_app_version\"/" chart/Chart.yaml

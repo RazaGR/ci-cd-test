@@ -1,0 +1,10 @@
+name: 'Create and Push Tag Action'
+description: 'Create and push tag'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create and push tag
+      run: |
+        git tag ${{ env.UPCOMING_CHART_VERSION }}
+        git push origin ${{ env.UPCOMING_CHART_VERSION }}

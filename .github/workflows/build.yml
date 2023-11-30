@@ -15,80 +15,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: ./.github/actions/checkout-action.yml
 
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.17
-          cache: false
-
-      - name: Run tests
-        run: go test ./...
-
-      - name: Build Go project
-        run: go build -o myapp
-
-      - name: Set up GitVersion
-        uses: gittools/actions/gitversion/setup@v0
-        with:
-          versionSpec: '5.x'
-
-      - name: Execute GitVersion
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0
+      - name: Go test build
+        uses: ./.github/actions/test-build-go-action.yml
 
       - name: Update version
-        run: |
-          # Get the current version from the Chart.yaml file
-          current_chart_version=$(grep -oP '(?<=version: ).*' chart/Chart.yaml)
-          current_app_version=$(grep -oP '(?<=appVersion: ")[^"]*' chart/Chart.yaml)
-
-          # Use the version from GitVersion
-          new_chart_version=${{ steps.gitversion.outputs.semVer }}
-          new_app_version=${{ steps.gitversion.outputs.fullSemVer }}
-
-          echo "CURRENT_CHART_VERSION=$current_chart_version" >> $GITHUB_ENV
-          echo "UPCOMING_CHART_VERSION=$new_chart_version" >> $GITHUB_ENV
-          echo "CURRENT_APP_VERSION=$current_app_version" >> $GITHUB_ENV
-          echo "UPCOMING_APP_VERSION=$new_app_version" >> $GITHUB_ENV
-
-          sed -i "s/version: $current_chart_version/version: $new_chart_version/" chart/Chart.yaml
-          sed -i "s/appVersion: \"$current_app_version\"/appVersion: \"$new_app_version\"/" chart/Chart.yaml
+        uses: ./.github/actions/version-action.yaml
 
       - name: Commit and push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add chart/Chart.yaml chart/values.yaml
-          git commit -m "chore: Update chart version [skip ci]"
-          git push
+        uses: ./.github/actions/commit-push-action.yaml
 
       - name: 'Login to GitHub Container Registry'
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
-
-      - id: string
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: ${{github.repository}}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/${{ steps.string.outputs.lowercase }}:${{ env.UPCOMING_CHART_VERSION }}
-            ghcr.io/${{ steps.string.outputs.lowercase }}:latest
+        uses: ./.github/actions/build-push-docker-action.yaml
 
       - name: Create and push tag
-        run: |
-          git tag ${{ env.UPCOMING_CHART_VERSION }}
-          git push origin ${{ env.UPCOMING_CHART_VERSION }}
+        uses: ./.github/actions/create-push-tag-action.yaml
 

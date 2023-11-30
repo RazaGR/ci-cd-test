@@ -1,0 +1,13 @@
+name: 'Commit and Push Action'
+description: 'Commit and push changes'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add chart/Chart.yaml chart/values.yaml
+        git commit -m "chore: Update chart version [skip ci]"
+        git push
