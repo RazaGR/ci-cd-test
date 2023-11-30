@@ -27,13 +27,14 @@ jobs:
 
       - name: Commit and push changes
         uses: ./.github/actions/commit-push-action
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          username: ${{github.actor}}
-          repository: ${{github.repository}}
+
 
       - name: 'Login to GitHub Container Registry'
         uses: ./.github/actions/build-push-docker-action
+        with:
+          password : ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ github.actor }}
+          repository: ${{ github.repository }}
 
       - name: Create and push tag
         uses: ./.github/actions/create-push-tag-action
