@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: ghcr.io/razagr/ci-cd-test:latest
+  repository: ghcr.io/razagr/ci-cd-test
   pullPolicy: Always 
   tag: ""
 
