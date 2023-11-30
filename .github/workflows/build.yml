@@ -28,7 +28,6 @@ jobs:
       - name: Commit and push changes
         uses: ./.github/actions/commit-push-action
 
-
       - name: 'Login to GitHub Container Registry'
         uses: ./.github/actions/build-push-docker-action
         with:
