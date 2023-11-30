@@ -34,6 +34,7 @@ jobs:
 
       - name: Update version
         run: |
+          set +x
           # Get the current version from the Chart.yaml file
           current_chart_version=$(grep -oP '(?<=version: ).*' chart/Chart.yaml)
           current_app_version=$(grep -oP '(?<=appVersion: ")[^"]*' chart/Chart.yaml)
