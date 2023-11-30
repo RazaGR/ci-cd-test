@@ -32,7 +32,11 @@ runs:
           patch=0
           if [[ $minor -eq 99 ]]; then
             minor=0
-            ((major++))
+            if [[ $major -eq 0 ]]; then
+              major=1
+            else
+              ((major++))
+            fi
           else
             ((minor++))
           fi
