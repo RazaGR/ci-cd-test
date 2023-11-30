@@ -38,10 +38,18 @@ runs:
               ((major++))
             fi
           else
-            ((minor++))
+            if [[ $minor -eq 0 ]]; then
+              minor=1
+            else
+              ((minor++))
+            fi
           fi
         else
-          ((patch++))
+            if [[ $patch -eq 0 ]]; then
+              patch=1
+            else
+              ((patch++))
+            fi
         fi
 
         # Create the upcoming version for chart
