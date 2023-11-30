@@ -5,6 +5,7 @@ runs:
   using: 'composite'
   steps:
     - name: Set up GitVersion
+      shell: bash
       uses: gittools/actions/gitversion/setup@v0
       with:
         versionSpec: '5.x'
