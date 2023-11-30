@@ -8,13 +8,12 @@ runs:
       uses: gittools/actions/gitversion/setup@v0
       with:
         versionSpec: '5.x'
-        shell: bash
+      shell: bash
 
     - name: Execute GitVersion
       id: gitversion
       uses: gittools/actions/gitversion/execute@v0
-      with:
-        shell: bash
+      shell: bash
 
     - name: Update version
       shell: bash
