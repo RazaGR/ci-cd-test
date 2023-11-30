@@ -15,7 +15,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: ./.github/actions/checkout-action
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Go test build
         uses: ./.github/actions/test-build-go-action
