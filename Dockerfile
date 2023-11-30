@@ -1,7 +1,7 @@
 
-FROM amd64/alpine:3.14
+FROM alpine:3.14
 RUN \
-    apk --update add curl bash nano && \
+    apk --update add curl bash nano musl-dev && \
     rm -r /var/cache/apk/*
 
 # The binary is built and downloaded to the current directory by  CI.

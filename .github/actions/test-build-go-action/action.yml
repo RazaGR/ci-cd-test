@@ -16,6 +16,6 @@ runs:
 
     - name: Build Go project
       shell: bash
-      run: go build -o myapp
+      run: CC=$(which musl-gcc) go build --ldflags '-w -linkmode external -extldflags "-static"' -o myapp
 
 
