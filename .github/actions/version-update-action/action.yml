@@ -55,7 +55,7 @@ runs:
         # Create the upcoming version for chart
         new_chart_version="$major.$minor.$patch"
         # Use the version from GitVersion for the app
-        new_app_version=${{ steps.gitversion.outputs.fullSemVer }}
+        new_app_version=${{ steps.gitversion.outputs.semVer }}
         # Create new release version 
         new_release_version=${{ steps.gitversion.outputs.semVer }}
 
